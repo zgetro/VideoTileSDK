@@ -36,7 +36,11 @@ class VideoTileAPI
     {
         $data = json_decode($this->getUserCourse($userId, $courseId), true);
 
-        return json_encode(['percentage' => $data['course']['percentage']]);
+        return json_encode([
+            'percentage' => $data['course']['percentage'],
+            'user' => $data['course']['user']['fullname'],
+            'course' => $data['course']['course']['coursename'],
+        ]);
     }
 
     public function getUsers()
