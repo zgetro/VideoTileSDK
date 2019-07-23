@@ -145,6 +145,22 @@ class VideoTile
     }
 
     /**
+     * Returns a status code.
+     *
+     * @param string $token
+     * @return \Psr\Http\Message\StreamInterface
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    public function generateAuthToken($token)
+    {
+        return $this->request('POST', '/my/lms-login', [
+            'form_params' => [
+                'api_token' => $token
+            ]
+        ]);
+    }
+
+    /**
      * @param integer $status
      * @param string $endPoint
      * @param array $parameters
