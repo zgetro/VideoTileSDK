@@ -28,6 +28,24 @@ class VideoTile
     }
 
     /**
+     * Authenticates a user, this is used to return an `api_token` from the API for first-time usage.
+     *
+     * @param string $email
+     * @param string $password
+     * @return false|StreamInterface|string
+     * @throws GuzzleException
+     */
+    public function authenticateUser($email, $password)
+    {
+        return $this->request('POST', 'login', [
+            'form_params' => [
+                'email' => $email,
+                'password' => $password
+            ]
+        ]);
+    }
+
+    /**
      * Returns a JSON array of all the courses stored with VideoTile.
      *
      * @return StreamInterface
@@ -67,6 +85,22 @@ class VideoTile
     }
 
     /**
+     * Returns a status code.
+     *
+     * @param string $token A users API token
+     * @return StreamInterface
+     * @throws GuzzleException
+     */
+    public function generateAuthToken($token)
+    {
+        return $this->request('POST', 'my/lms-login', [
+            'form_params' => [
+                'api_token' => $token
+            ]
+        ]);
+    }
+
+    /**
      * Returns a JSON array of all users associated with VideoTile.
      *
      * @return false|StreamInterface|string
@@ -77,6 +111,29 @@ class VideoTile
         return $this->request('POST', 'admin/users/list', [
             'form_params' => [
                 'admin_token' => $this->_adminToken
+            ]
+        ]);
+    }
+
+    /**
+     * Creates a user in the VideoTile LMS
+     *
+     * @param string $firstName
+     * @param string $lastName
+     * @param string $email
+     * @param string $telephone
+     * @return false|StreamInterface|string
+     * @throws GuzzleException
+     */
+    public function createUser($firstName, $lastName, $email, $telephone)
+    {
+        return $this->request('POST', 'admin/users/create', [
+            'form_params' => [
+                'admin_token' => $this->_adminToken,
+                'first_name' => $firstName,
+                'last_name' => $lastName,
+                'email' => $email,
+                'telephone' => $telephone,
             ]
         ]);
     }
@@ -142,22 +199,6 @@ class VideoTile
         return $this->request('POST', 'admin/users/user/' . $userId . '/disable', [
             'form_params' => [
                 'admin_token' => $this->_adminToken
-            ]
-        ]);
-    }
-
-    /**
-     * Returns a status code.
-     *
-     * @param string $token A users API token
-     * @return StreamInterface
-     * @throws GuzzleException
-     */
-    public function generateAuthToken($token)
-    {
-        return $this->request('POST', 'my/lms-login', [
-            'form_params' => [
-                'api_token' => $token
             ]
         ]);
     }
