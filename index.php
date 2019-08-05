@@ -6,21 +6,34 @@ use Psr\Http\Message\StreamInterface;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Psr7;
 
+/**
+ * Class VideoTile
+ * Created by Wish Agency Ltd
+ */
 class VideoTile
 {
-    private $_client = null;
-    private $_endpoint = null;
-    private $_adminToken = '';
+    /**
+     * @var string $_client GuzzleClient, this is self assigned
+     * @var string $_endpoint VideoTile API endpoint
+     * @var string $_adminToken The admin token used for admin actions
+     * @var string $_vendor The vendor name this is used for the API middleware to determine the request
+     */
+    private $_client,
+        $_endpoint,
+        $_adminToken,
+        $_vendor = null;
 
     /**
      * VideoTileAPI constructor.
      * @param string $endpoint The full URL to the API.
      * @param string $adminToken Private admin token used for authorization on the API endpoint.
+     * @param string $vendor
      */
-    public function __construct($endpoint, $adminToken)
+    public function __construct($endpoint, $adminToken, $vendor)
     {
         $this->_endpoint = $endpoint;
         $this->_adminToken = $adminToken;
+        $this->_vendor = $vendor;
 
         $this->_client = new GuzzleClient([
             'http_errors' => false
@@ -28,10 +41,44 @@ class VideoTile
     }
 
     /**
+     * Generates a one click link for a user, allows them to login instantly to VideoTile.
+     *
+     * @param string $token A users `api_token`
+     * @param string $action The action we'd like the user to go through (course or suite)
+     * @param int $actionId If specified, a course id
+     * @return string An error or a built up login URL.
+     * @throws GuzzleException
+     */
+    public function generateLoginUrl($token, $action = 'course', $actionId = 0)
+    {
+        $authToken = null;
+
+        /* use a below method for generating the auth token */
+        $getAuthToken = $this->generateAuthToken($token);
+
+        /* providing we get a request, let's dig in further */
+        if (!empty($getAuthToken)) {
+            $authTokenData = \GuzzleHttp\json_decode($getAuthToken, true);
+
+            /* If we have an error, throw it */
+            if (isset($authTokenData['error'])) {
+                return $authTokenData['error'];
+            }
+
+            /* Retrieve the token and return a built up script */
+            $authToken = $authTokenData['auth_token'];
+
+            return 'https://videotilehost.com/' . $this->_vendor . '/script.php?vendor=' . $this->_vendor . '&token=' . $authToken . '&action=' . $action . '&id=' . $actionId;
+        }
+
+        return 'No token could be found';
+    }
+
+    /**
      * Authenticates a user, this is used to return an `api_token` from the API for first-time usage.
      *
-     * @param string $email
-     * @param string $password
+     * @param string $email A users LMS email address.
+     * @param string $password The users password.
      * @return false|StreamInterface|string
      * @throws GuzzleException
      */
@@ -149,7 +196,7 @@ class VideoTile
     {
         return $this->request('POST', 'admin/users/user/' . $userId, [
             'form_params' => [
-                'admin_token' => $this->_adminToken
+                'admin_token' => $this->_adminToken,
             ]
         ]);
     }
@@ -165,7 +212,7 @@ class VideoTile
     {
         return $this->request('POST', 'admin/users/user/' . $userId . '/courses', [
             'form_params' => [
-                'admin_token' =>  $this->_adminToken
+                'admin_token' => $this->_adminToken
             ]
         ]);
     }
@@ -215,6 +262,11 @@ class VideoTile
         header('Content-Type: application/json');
 
         try {
+            /* append the vendor id, instead of assigning it to every method above */
+            if (!isset($parameters['form_params']['vendor_id'])) {
+                $parameters['form_params']['vendor_id'] = $this->_vendor;
+            }
+
             $response = $this->_client->request($verb, ($this->_endpoint . '/' . $resource), $parameters);
 
             return $response->getBody();
