@@ -1,15 +1,8 @@
 <?php
 
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
 require __DIR__ . '/index.php';
 require __DIR__ . '/vendor/autoload.php';
 
-$api = new VideoTile('http://vt-api.local', 'WISHDIGITAL', 'wishdigital');
+$api = new VideoTile('http://vt-api.local', 'admin_token', 'vendor_lms_name');
 
-echo $api->generateLoginUrl('121');
-
-
-// generateLoginUrl
+echo $api->generateLoginUrl('user_token');

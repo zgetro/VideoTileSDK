@@ -68,7 +68,7 @@ class VideoTile
             /* Retrieve the token and return a built up script */
             $authToken = $authTokenData['auth_token'];
 
-            return 'https://videotilehost.com/' . $this->_vendor . '/script.php?vendor=' . $this->_vendor . '&token=' . $authToken . '&action=' . $action . '&id=' . $actionId;
+            return 'https://videotilehost.com/' . $this->_vendor . '/api_script.php?vendor=' . $this->_vendor . '&token=' . $authToken . '&action=' . $action . '&id=' . $actionId;
         }
 
         return 'No token could be found';
@@ -77,16 +77,16 @@ class VideoTile
     /**
      * Authenticates a user, this is used to return an `api_token` from the API for first-time usage.
      *
-     * @param string $email A users LMS email address.
+     * @param string $username Username from the LMS panel.
      * @param string $password The users password.
      * @return false|StreamInterface|string
      * @throws GuzzleException
      */
-    public function authenticateUser($email, $password)
+    public function authenticateUser($username, $password)
     {
         return $this->request('POST', 'login', [
             'form_params' => [
-                'email' => $email,
+                'username' => $username,
                 'password' => $password
             ]
         ]);
