@@ -251,6 +251,22 @@ class VideoTile
     }
 
     /**
+     * Returns a status code.
+     *
+     * @param integer $userId Id of the user to preform the action on.
+     * @return StreamInterface
+     * @throws GuzzleException
+     */
+    public function enableUserAccountById($userId)
+    {
+        return $this->request('POST', 'admin/users/user/' . $userId . '/enable', [
+            'form_params' => [
+                'admin_token' => $this->_adminToken
+            ]
+        ]);
+    }
+
+    /**
      * @param string $verb HTTP Verb (POST, GET, PUT, PATCH, DELETE)
      * @param string $resource The API resource we're sending a request to.
      * @param array $parameters An array of parameters for the request.
