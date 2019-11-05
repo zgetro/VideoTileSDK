@@ -267,6 +267,23 @@ class VideoTile
     }
 
     /**
+     * Returns an object with a message and if available, a user course id
+     *
+     * @param $userId
+     * @param $courseId
+     * @return false|StreamInterface|string
+     * @throws GuzzleException
+     */
+    public function assignCourseByUserId($userId, $courseId)
+    {
+        return $this->request('POST', 'admin/course/assign', [
+            'form_params' => [
+                'admin_token' => $this->_adminToken
+            ]
+        ]);
+    }
+
+    /**
      * @param string $verb HTTP Verb (POST, GET, PUT, PATCH, DELETE)
      * @param string $resource The API resource we're sending a request to.
      * @param array $parameters An array of parameters for the request.
