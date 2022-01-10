@@ -77,16 +77,16 @@ class VideoTile
     /**
      * Authenticates a user, this is used to return an `api_token` from the API for first-time usage.
      *
-     * @param string $username Username from the LMS panel.
+     * @param string $email email from the LMS panel.
      * @param string $password The users password.
      * @return false|StreamInterface|string
      * @throws GuzzleException
      */
-    public function authenticateUser($username, $password)
+    public function authenticateUser($email, $password)
     {
         return $this->request('POST', 'login', [
             'form_params' => [
-                'username' => $username,
+                'email' => $email,
                 'password' => $password
             ]
         ]);

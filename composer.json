@@ -1,4 +1,12 @@
 {
+    "name": "zgetro/video-tile-sdk",
+    "description": "wrapper.",
+    "autoload": {
+        "psr-4": {
+            "Zgetro\\VideoTileSdk\\": "src/"
+        }
+    },
+    "minimum-stability": "dev",
     "require": {
         "php": ">=5.4",
         "ext-json": "*",
@@ -8,3 +16,4 @@
         "squizlabs/php_codesniffer": "^3.4"
     }
 }
+
