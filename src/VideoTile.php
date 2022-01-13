@@ -1,11 +1,11 @@
 <?php
 
-namespace VideoTileSDK;
+namespace VideoTileSdk;
 
 use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Exception\RequestException;
-use GuzzleHttp\Psr7;
+use GuzzleHttp\Psr7\Message;
 use Psr\Http\Message\StreamInterface;
 
 /**
@@ -394,10 +394,10 @@ class VideoTile
 
             return $response->getBody();
         } catch (RequestException $e) {
-            echo Psr7\Message::toString($e->getRequest());
+            echo Message::toString($e->getRequest());
 
             if ($e->hasResponse()) {
-                echo Psr7\Message::toString($e->getResponse());
+                echo Message::toString($e->getResponse());
             }
         }
     }

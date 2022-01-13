@@ -1,9 +1,19 @@
 {
     "name": "zgetro/video-tile-sdk",
-    "description": "wrapper.",
+    "description": "Forked of offical VideoTileSDK package.",
+    "type": "library",
+    "keywords": [
+        "Video Tile SDK"
+    ],
+    "authors": [
+        {
+            "name": "zgetro",
+            "email": "chirag7004classic@gmail.com"
+        }
+    ],
     "autoload": {
         "psr-4": {
-            "Zgetro\\VideoTileSdk\\": "src/"
+            "VideoTileSdk\\": "src/"
         }
     },
     "minimum-stability": "dev",
