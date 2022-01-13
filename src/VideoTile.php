@@ -1,5 +1,7 @@
 <?php
 
+namespace VideoTileSDK;
+
 use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Exception\RequestException;
@@ -13,14 +15,23 @@ use Psr\Http\Message\StreamInterface;
 class VideoTile
 {
     /**
-     * @var string GuzzleClient, this is self assigned
-     * @var string VideoTile API endpoint
-     * @var string The admin token used for admin actions
-     * @var string The vendor name this is used for the API middleware to determine the request
+     * @var GuzzleClient, this is self assigned
      */
     private $_client;
+
+    /**
+     * @var string VideoTile API endpoint
+     */
     private $_endpoint;
+
+    /**
+     * @var string The admin token used for admin actions
+     */
     private $_adminToken;
+
+    /**
+     * @var string The vendor name this is used for the API middleware to determine the request
+     */
     private $_vendor = null;
 
     /**
@@ -36,9 +47,11 @@ class VideoTile
         $this->_adminToken = $adminToken;
         $this->_vendor = $vendor;
 
-        $this->_client = new GuzzleClient([
-            'http_errors' => false,
-        ]);
+        $this->_client = new GuzzleClient(
+            [
+                'http_errors' => false,
+            ]
+        );
     }
 
     /**
@@ -71,7 +84,11 @@ class VideoTile
             /* Retrieve the token and return a built up script */
             $authToken = $authTokenData['auth_token'];
 
-            return 'https://videotilehost.com/'.$this->_vendor.'/api_script.php?vendor='.$this->_vendor.'&token='.$authToken.'&action='.$action.'&id='.$actionId;
+            return 'https://videotilehost.com/' . $this->_vendor .
+                '/api_script.php?vendor=' . $this->_vendor .
+                '&token=' . $authToken .
+                '&action=' . $action .
+                '&id=' . $actionId;
         }
 
         return 'No token could be found';
@@ -89,12 +106,16 @@ class VideoTile
      */
     public function authenticateUser($email, $password)
     {
-        return $this->request('POST', 'login', [
-            'form_params' => [
-                'email'    => $email,
-                'password' => $password,
-            ],
-        ]);
+        return $this->request(
+            'POST',
+            'login',
+            [
+                'form_params' => [
+                    'email'    => $email,
+                    'password' => $password,
+                ],
+            ]
+        );
     }
 
     /**
@@ -120,7 +141,7 @@ class VideoTile
      */
     public function getCourseById($courseId)
     {
-        return $this->request('POST', 'courses/'.$courseId);
+        return $this->request('POST', 'courses/' . $courseId);
     }
 
     /**
@@ -134,11 +155,15 @@ class VideoTile
      */
     public function getMyCourses($token)
     {
-        return $this->request('POST', 'my/courses', [
-            'form_params' => [
-                'api_token' => $token,
-            ],
-        ]);
+        return $this->request(
+            'POST',
+            'my/courses',
+            [
+                'form_params' => [
+                    'api_token' => $token,
+                ],
+            ]
+        );
     }
 
     /**
@@ -152,11 +177,15 @@ class VideoTile
      */
     public function generateAuthToken($token)
     {
-        return $this->request('POST', 'my/lms-login', [
-            'form_params' => [
-                'api_token' => $token,
-            ],
-        ]);
+        return $this->request(
+            'POST',
+            'my/lms-login',
+            [
+                'form_params' => [
+                    'api_token' => $token,
+                ],
+            ]
+        );
     }
 
     /**
@@ -168,11 +197,15 @@ class VideoTile
      */
     public function getUserList()
     {
-        return $this->request('POST', 'admin/users/list', [
-            'form_params' => [
-                'admin_token' => $this->_adminToken,
-            ],
-        ]);
+        return $this->request(
+            'POST',
+            'admin/users/list',
+            [
+                'form_params' => [
+                    'admin_token' => $this->_adminToken,
+                ],
+            ]
+        );
     }
 
     /**
@@ -189,15 +222,19 @@ class VideoTile
      */
     public function createUser($firstName, $lastName, $email, $telephone)
     {
-        return $this->request('POST', 'admin/users/create', [
-            'form_params' => [
-                'admin_token' => $this->_adminToken,
-                'first_name'  => $firstName,
-                'last_name'   => $lastName,
-                'email'       => $email,
-                'telephone'   => $telephone,
-            ],
-        ]);
+        return $this->request(
+            'POST',
+            'admin/users/create',
+            [
+                'form_params' => [
+                    'admin_token' => $this->_adminToken,
+                    'first_name'  => $firstName,
+                    'last_name'   => $lastName,
+                    'email'       => $email,
+                    'telephone'   => $telephone,
+                ],
+            ]
+        );
     }
 
     /**
@@ -211,11 +248,15 @@ class VideoTile
      */
     public function getUserById($userId)
     {
-        return $this->request('POST', 'admin/users/user/'.$userId, [
-            'form_params' => [
-                'admin_token' => $this->_adminToken,
-            ],
-        ]);
+        return $this->request(
+            'POST',
+            'admin/users/user/' . $userId,
+            [
+                'form_params' => [
+                    'admin_token' => $this->_adminToken,
+                ],
+            ]
+        );
     }
 
     /**
@@ -229,11 +270,15 @@ class VideoTile
      */
     public function getUserCoursesById($userId)
     {
-        return $this->request('POST', 'admin/users/user/'.$userId.'/courses', [
-            'form_params' => [
-                'admin_token' => $this->_adminToken,
-            ],
-        ]);
+        return $this->request(
+            'POST',
+            'admin/users/user/' . $userId . '/courses',
+            [
+                'form_params' => [
+                    'admin_token' => $this->_adminToken,
+                ],
+            ]
+        );
     }
 
     /**
@@ -248,11 +293,15 @@ class VideoTile
      */
     public function getUserCourseByCourseId($userId, $courseId)
     {
-        return $this->request('POST', 'admin/users/user/'.$userId.'/courses/'.$courseId, [
-            'form_params' => [
-                'admin_token' => $this->_adminToken,
-            ],
-        ]);
+        return $this->request(
+            'POST',
+            'admin/users/user/' . $userId . '/courses/' . $courseId,
+            [
+                'form_params' => [
+                    'admin_token' => $this->_adminToken,
+                ],
+            ]
+        );
     }
 
     /**
@@ -266,11 +315,15 @@ class VideoTile
      */
     public function disableUserAccountById($userId)
     {
-        return $this->request('POST', 'admin/users/user/'.$userId.'/disable', [
-            'form_params' => [
-                'admin_token' => $this->_adminToken,
-            ],
-        ]);
+        return $this->request(
+            'POST',
+            'admin/users/user/' . $userId . '/disable',
+            [
+                'form_params' => [
+                    'admin_token' => $this->_adminToken,
+                ],
+            ]
+        );
     }
 
     /**
@@ -284,11 +337,15 @@ class VideoTile
      */
     public function enableUserAccountById($userId)
     {
-        return $this->request('POST', 'admin/users/user/'.$userId.'/enable', [
-            'form_params' => [
-                'admin_token' => $this->_adminToken,
-            ],
-        ]);
+        return $this->request(
+            'POST',
+            'admin/users/user/' . $userId . '/enable',
+            [
+                'form_params' => [
+                    'admin_token' => $this->_adminToken,
+                ],
+            ]
+        );
     }
 
     /**
@@ -303,11 +360,15 @@ class VideoTile
      */
     public function assignCourseByUserId($userId, $courseId)
     {
-        return $this->request('POST', 'admin/course/assign', [
-            'form_params' => [
-                'admin_token' => $this->_adminToken,
-            ],
-        ]);
+        return $this->request(
+            'POST',
+            'admin/course/assign',
+            [
+                'form_params' => [
+                    'admin_token' => $this->_adminToken,
+                ],
+            ]
+        );
     }
 
     /**
@@ -329,14 +390,14 @@ class VideoTile
                 $parameters['form_params']['vendor_id'] = $this->_vendor;
             }
 
-            $response = $this->_client->request($verb, ($this->_endpoint.'/'.$resource), $parameters);
+            $response = $this->_client->request($verb, ($this->_endpoint . '/' . $resource), $parameters);
 
             return $response->getBody();
         } catch (RequestException $e) {
-            echo Psr7\str($e->getRequest());
+            echo Psr7\Message::toString($e->getRequest());
 
             if ($e->hasResponse()) {
-                echo Psr7\str($e->getResponse());
+                echo Psr7\Message::toString($e->getResponse());
             }
         }
     }
