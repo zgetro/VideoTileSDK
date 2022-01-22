@@ -84,11 +84,11 @@ class VideoTile
             /* Retrieve the token and return a built up script */
             $authToken = $authTokenData['auth_token'];
 
-            return 'https://videotilehost.com/' . $this->_vendor .
-                '/api_script.php?vendor=' . $this->_vendor .
-                '&token=' . $authToken .
-                '&action=' . $action .
-                '&id=' . $actionId;
+            return 'https://videotilehost.com/'.$this->_vendor.
+                '/api_script.php?vendor='.$this->_vendor.
+                '&token='.$authToken.
+                '&action='.$action.
+                '&id='.$actionId;
         }
 
         return 'No token could be found';
@@ -141,7 +141,7 @@ class VideoTile
      */
     public function getCourseById($courseId)
     {
-        return $this->request('POST', 'courses/' . $courseId);
+        return $this->request('POST', 'courses/'.$courseId);
     }
 
     /**
@@ -250,7 +250,7 @@ class VideoTile
     {
         return $this->request(
             'POST',
-            'admin/users/user/' . $userId,
+            'admin/users/user/'.$userId,
             [
                 'form_params' => [
                     'admin_token' => $this->_adminToken,
@@ -272,7 +272,7 @@ class VideoTile
     {
         return $this->request(
             'POST',
-            'admin/users/user/' . $userId . '/courses',
+            'admin/users/user/'.$userId.'/courses',
             [
                 'form_params' => [
                     'admin_token' => $this->_adminToken,
@@ -295,7 +295,7 @@ class VideoTile
     {
         return $this->request(
             'POST',
-            'admin/users/user/' . $userId . '/courses/' . $courseId,
+            'admin/users/user/'.$userId.'/courses/'.$courseId,
             [
                 'form_params' => [
                     'admin_token' => $this->_adminToken,
@@ -317,7 +317,7 @@ class VideoTile
     {
         return $this->request(
             'POST',
-            'admin/users/user/' . $userId . '/disable',
+            'admin/users/user/'.$userId.'/disable',
             [
                 'form_params' => [
                     'admin_token' => $this->_adminToken,
@@ -339,7 +339,7 @@ class VideoTile
     {
         return $this->request(
             'POST',
-            'admin/users/user/' . $userId . '/enable',
+            'admin/users/user/'.$userId.'/enable',
             [
                 'form_params' => [
                     'admin_token' => $this->_adminToken,
@@ -390,7 +390,7 @@ class VideoTile
                 $parameters['form_params']['vendor_id'] = $this->_vendor;
             }
 
-            $response = $this->_client->request($verb, ($this->_endpoint . '/' . $resource), $parameters);
+            $response = $this->_client->request($verb, ($this->_endpoint.'/'.$resource), $parameters);
 
             return $response->getBody();
         } catch (RequestException $e) {
