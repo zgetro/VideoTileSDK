@@ -2,6 +2,7 @@
     "name": "zgetro/video-tile-sdk",
     "description": "Forked of offical VideoTileSDK package.",
     "type": "library",
+    "license": "MIT",
     "keywords": [
         "Video Tile SDK"
     ],
