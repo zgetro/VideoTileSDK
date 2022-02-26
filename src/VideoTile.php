@@ -365,7 +365,10 @@ class VideoTile
             'admin/course/assign',
             [
                 'form_params' => [
+                    'user_id' => $userId,
+                    'course_id' => $courseId,
                     'admin_token' => $this->_adminToken,
+                    'vendor_id' => $this->_vendor,
                 ],
             ]
         );
