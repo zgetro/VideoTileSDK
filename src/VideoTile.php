@@ -393,7 +393,7 @@ class VideoTile
                 $parameters['form_params']['vendor_id'] = $this->_vendor;
             }
 
-            $response = $this->_client->request($verb, ($this->_endpoint.'/'.$resource), $parameters);
+            $response = $this->_client->request($verb, $this->_endpoint.'/'.$resource, $parameters);
 
             return $response->getBody();
         } catch (RequestException $e) {
