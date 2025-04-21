@@ -404,5 +404,6 @@ class VideoTile
                 echo Message::toString($e->getResponse());
             }
         }
+        return false;
     }
 }

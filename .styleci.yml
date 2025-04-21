@@ -1,21 +1,29 @@
-risky: false
+preset: laravel
 
-version: 5.6
-
-preset: recommended
-
-tab-width: 4
-
-use-tabs: false
-
-enabled:
-  - long_array_syntax
-  - strict
-  - unalign_double_arrow
-
-disabled:
-  - align_double_arrow
-  - short_array_syntax
+rules:
+  - array_syntax
+  - strict_comparison
+  - strict_param
+  - no_unused_imports
+  - ordered_imports
+  - phpdoc_align
+  - phpdoc_scalar
+  - phpdoc_separation
+  - phpdoc_summary
+  - phpdoc_to_comment
+  - single_blank_line_at_eof
+  - no_extra_blank_lines
+  - binary_operator_spaces
+  - cast_spaces
+  - concat_space
+  - method_argument_space
+  - no_whitespace_in_blank_line
+  - return_type_declaration_space
+  - single_trait_insert_per_statement
+  - ternary_operator_spaces
+  - trim_array_spaces
+  - unary_operator_spaces
+  - whitespace_after_comma_in_array
 
 finder:
   exclude:
