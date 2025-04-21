@@ -1,5 +1,4 @@
 risky: false
-version: 7.2
 preset: recommended
 monolithic: true
 finder:
