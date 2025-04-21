@@ -37,9 +37,9 @@ class VideoTile
     /**
      * VideoTileAPI constructor.
      *
-     * @param string $endpoint   The full URL to the API.
-     * @param string $adminToken Private admin token used for authorization on the API endpoint.
-     * @param string $vendor
+     * @param string            $endpoint   The full URL to the API.
+     * @param string            $adminToken Private admin token used for authorization on the API endpoint.
+     * @param string            $vendor
      * @param GuzzleClient|null $client
      */
     public function __construct($endpoint, $adminToken, $vendor, $client = null)
@@ -404,6 +404,7 @@ class VideoTile
                 echo Message::toString($e->getResponse());
             }
         }
+
         return false;
     }
 }

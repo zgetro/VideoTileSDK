@@ -1,9 +1,9 @@
 <?php
 
-use PHPUnit\Framework\TestCase;
-use VideoTileSdk\VideoTile;
 use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\Psr7\Response;
+use PHPUnit\Framework\TestCase;
+use VideoTileSdk\VideoTile;
 
 class VideoTileTest extends TestCase
 {
@@ -25,8 +25,8 @@ class VideoTileTest extends TestCase
                 'https://fake.endpoint/login',
                 [
                     'form_params' => [
-                        'email'    => 'test@example.com',
-                        'password' => 'password',
+                        'email'     => 'test@example.com',
+                        'password'  => 'password',
                         'vendor_id' => 'vendor',
                     ],
                 ]
@@ -34,7 +34,7 @@ class VideoTileTest extends TestCase
             ->willReturn(new Response(200, [], 'token'));
 
         $result = $this->videoTile->authenticateUser('test@example.com', 'password');
-        $this->assertEquals('token', (string)$result);
+        $this->assertEquals('token', (string) $result);
     }
 
     public function testGenerateAuthToken()
@@ -54,7 +54,7 @@ class VideoTileTest extends TestCase
             ->willReturn(new Response(200, [], 'auth_token'));
 
         $result = $this->videoTile->generateAuthToken('token');
-        $this->assertEquals('auth_token', (string)$result);
+        $this->assertEquals('auth_token', (string) $result);
     }
 
     public function testGetUserList()
@@ -67,14 +67,14 @@ class VideoTileTest extends TestCase
                 [
                     'form_params' => [
                         'admin_token' => 'admin_token',
-                        'vendor_id' => 'vendor',
+                        'vendor_id'   => 'vendor',
                     ],
                 ]
             )
             ->willReturn(new Response(200, [], 'user_list'));
 
         $result = $this->videoTile->getUserList();
-        $this->assertEquals('user_list', (string)$result);
+        $this->assertEquals('user_list', (string) $result);
     }
 
     public function testGetUserById()
@@ -87,14 +87,14 @@ class VideoTileTest extends TestCase
                 [
                     'form_params' => [
                         'admin_token' => 'admin_token',
-                        'vendor_id' => 'vendor',
+                        'vendor_id'   => 'vendor',
                     ],
                 ]
             )
             ->willReturn(new Response(200, [], 'user'));
 
         $result = $this->videoTile->getUserById(1);
-        $this->assertEquals('user', (string)$result);
+        $this->assertEquals('user', (string) $result);
     }
 
     public function testCreateUser()
@@ -111,14 +111,14 @@ class VideoTileTest extends TestCase
                         'last_name'   => 'Doe',
                         'email'       => 'john@example.com',
                         'telephone'   => '1234567890',
-                        'vendor_id' => 'vendor',
+                        'vendor_id'   => 'vendor',
                     ],
                 ]
             )
             ->willReturn(new Response(200, [], 'created'));
 
         $result = $this->videoTile->createUser('John', 'Doe', 'john@example.com', '1234567890');
-        $this->assertEquals('created', (string)$result);
+        $this->assertEquals('created', (string) $result);
     }
 
     public function testAssignCourseByUserId()
@@ -140,7 +140,7 @@ class VideoTileTest extends TestCase
             ->willReturn(new Response(200, [], 'assigned'));
 
         $result = $this->videoTile->assignCourseByUserId(1, 2);
-        $this->assertEquals('assigned', (string)$result);
+        $this->assertEquals('assigned', (string) $result);
     }
 
     public function testGetUserCoursesById()
@@ -153,14 +153,14 @@ class VideoTileTest extends TestCase
                 [
                     'form_params' => [
                         'admin_token' => 'admin_token',
-                        'vendor_id' => 'vendor',
+                        'vendor_id'   => 'vendor',
                     ],
                 ]
             )
             ->willReturn(new Response(200, [], 'courses'));
 
         $result = $this->videoTile->getUserCoursesById(1);
-        $this->assertEquals('courses', (string)$result);
+        $this->assertEquals('courses', (string) $result);
     }
 
     public function testGetUserCourseByCourseId()
@@ -173,14 +173,14 @@ class VideoTileTest extends TestCase
                 [
                     'form_params' => [
                         'admin_token' => 'admin_token',
-                        'vendor_id' => 'vendor',
+                        'vendor_id'   => 'vendor',
                     ],
                 ]
             )
             ->willReturn(new Response(200, [], 'user_course'));
 
         $result = $this->videoTile->getUserCourseByCourseId(1, 2);
-        $this->assertEquals('user_course', (string)$result);
+        $this->assertEquals('user_course', (string) $result);
     }
 
     public function testDisableUserAccountById()
@@ -193,14 +193,14 @@ class VideoTileTest extends TestCase
                 [
                     'form_params' => [
                         'admin_token' => 'admin_token',
-                        'vendor_id' => 'vendor',
+                        'vendor_id'   => 'vendor',
                     ],
                 ]
             )
             ->willReturn(new Response(200, [], 'disabled'));
 
         $result = $this->videoTile->disableUserAccountById(1);
-        $this->assertEquals('disabled', (string)$result);
+        $this->assertEquals('disabled', (string) $result);
     }
 
     public function testEnableUserAccountById()
@@ -213,14 +213,14 @@ class VideoTileTest extends TestCase
                 [
                     'form_params' => [
                         'admin_token' => 'admin_token',
-                        'vendor_id' => 'vendor',
+                        'vendor_id'   => 'vendor',
                     ],
                 ]
             )
             ->willReturn(new Response(200, [], 'enabled'));
 
         $result = $this->videoTile->enableUserAccountById(1);
-        $this->assertEquals('enabled', (string)$result);
+        $this->assertEquals('enabled', (string) $result);
     }
 
     public function testGetCourses()
@@ -239,7 +239,7 @@ class VideoTileTest extends TestCase
             ->willReturn(new Response(200, [], 'courses'));
 
         $result = $this->videoTile->getCourses();
-        $this->assertEquals('courses', (string)$result);
+        $this->assertEquals('courses', (string) $result);
     }
 
     public function testGetCourseById()
@@ -258,7 +258,7 @@ class VideoTileTest extends TestCase
             ->willReturn(new Response(200, [], 'course'));
 
         $result = $this->videoTile->getCourseById(1);
-        $this->assertEquals('course', (string)$result);
+        $this->assertEquals('course', (string) $result);
     }
 
     public function testGetMyCourses()
@@ -278,7 +278,7 @@ class VideoTileTest extends TestCase
             ->willReturn(new Response(200, [], 'my_courses'));
 
         $result = $this->videoTile->getMyCourses('token');
-        $this->assertEquals('my_courses', (string)$result);
+        $this->assertEquals('my_courses', (string) $result);
     }
 
     public function testGenerateLoginUrlError()
