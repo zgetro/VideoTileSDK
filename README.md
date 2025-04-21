@@ -8,17 +8,39 @@ The SDK is provided as a starting point to get to grips with the API, a quick & 
 
 Full documentation can be found [here](http://api.videotilehost.com/docs/#our-api).
 
-# Example usage
+## Requirements
+- PHP >= 7.2.5
+- ext-json
+- guzzlehttp/guzzle ^7.4
+
+## Installation
+
+```
+composer require zgetro/video-tile-sdk
+```
+
+## Example usage
 
 ```php
-
 <?php
-
-require __DIR__ . '/index.php';
 require __DIR__ . '/vendor/autoload.php';
 
-// special the VideoTile endpoint, your admin token & LMS vendor name.
-$api = new VideoTile('http://api.videotilehost.com/', 'admin_token', 'vendor_lms_name');
+// Specify the VideoTile endpoint, your admin token & LMS vendor name.
+$api = new VideoTileSdk\VideoTile('http://api.videotilehost.com/', 'admin_token', 'vendor_lms_name');
 
 echo $api->generateLoginUrl('user_token');
 ```
+
+## Running Tests
+
+To run the full test suite:
+
+```
+composer test
+```
+
+## Changelog
+See [CHANGELOG.md](CHANGELOG.md) for recent changes.
+
+## License
+MIT

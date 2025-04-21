@@ -40,18 +40,16 @@ class VideoTile
      * @param string $endpoint   The full URL to the API.
      * @param string $adminToken Private admin token used for authorization on the API endpoint.
      * @param string $vendor
+     * @param GuzzleClient|null $client
      */
-    public function __construct($endpoint, $adminToken, $vendor)
+    public function __construct($endpoint, $adminToken, $vendor, $client = null)
     {
         $this->_endpoint = $endpoint;
         $this->_adminToken = $adminToken;
         $this->_vendor = $vendor;
-
-        $this->_client = new GuzzleClient(
-            [
-                'http_errors' => false,
-            ]
-        );
+        $this->_client = $client ?: new GuzzleClient([
+            'http_errors' => false,
+        ]);
     }
 
     /**
@@ -173,7 +171,7 @@ class VideoTile
      *
      * @throws GuzzleException
      *
-     * @return StreamInterface
+     * @return string An error or a built up login URL.
      */
     public function generateAuthToken($token)
     {
@@ -385,7 +383,10 @@ class VideoTile
      */
     private function request($verb, $resource, $parameters = [])
     {
-        header('Content-Type: application/json');
+        // Only set header if not running from CLI (e.g., not in PHPUnit)
+        if (php_sapi_name() !== 'cli') {
+            header('Content-Type: application/json');
+        }
 
         try {
             /* append the vendor id, instead of assigning it to every method above */
